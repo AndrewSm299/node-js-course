@@ -12,7 +12,6 @@ Validator.validatePhone = (phone) => {
     }
     let regexp = /^([\s-]*)(+?\d{0,4})(\(?\d{0,3}\)?)([\d\s\-]*)$/
                 //  /^([\s-]*)(+?\d{0,4})(?\d0,3?\d0,3?)([\d\s-])$/
-    let a = ''
     return a.match(regexp) ? true : false
 }
 
