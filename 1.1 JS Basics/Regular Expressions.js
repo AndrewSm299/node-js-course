@@ -1,20 +1,22 @@
 let Validator = {}
 
-Validator.validateEmail() = (email) => {
-    let regexp = /^([^-.+][-.+a-z0-9]{1,19})@([.!$%&’*+/=?^_- 0-9a-z]{1-15}).([a-z]{1,5})$/i
+Validator.validateEmail = (email) => {
+    //let regexp = /([^.+-][\.\+a-z0-9-]{1,19})@([.!$%&’*+/=?\^_0-9a-z\-]{1,15}).([a-z]{1,5})$/i
+    let regexp = /^([\^-\.\+][-\.\+a-z0-9]{1,19})@([\.!\$%&’\*\+\/=\?\^_0-9a-z\-]{1,15}).([a-z]{1,5})$/i
     return email.match(regexp) ? true : false
 }
 
-Validator.validatePhone() = (phone) => {
+Validator.validatePhone = (phone) => {
     if(phone.length > 25){
         return null
     }
-    let regexp = /^([\s-]*)(+?\d{0,4})(\(?\d{0,3}\)?)([\d\s-]*)$/
+    let regexp = /^([\s-]*)(+?\d{0,4})(\(?\d{0,3}\)?)([\d\s\-]*)$/
+                //  /^([\s-]*)(+?\d{0,4})(?\d0,3?\d0,3?)([\d\s-])$/
     let a = ''
     return a.match(regexp) ? true : false
 }
 
-Validator.validatePassword() = (password)  => {
+Validator.validatePassword = (password)  => {
     let regexp = /^\w(?=[a-z])(?=[A-Z])(?=[0-9]){8,}/
     return password.match(regexp) ? true : false
 }
