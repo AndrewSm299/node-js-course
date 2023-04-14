@@ -69,7 +69,7 @@ function Product(id, name, description, price, brand, sizes, activesize, quantit
 
 
     this.getImages = () => this.images
-    this.setImage = (images) => this.images = images
+    this.setImages = (images) => this.images = images
 
 
     this.getReviewByID = (id) => this.getReviews.find(review => review.id === id),
@@ -77,10 +77,10 @@ function Product(id, name, description, price, brand, sizes, activesize, quantit
 
     this.getImage = (image_key) => {
         if(image_key === 'undefined' || image_key === null || image_key === NaN){
-            return this.image[0]
+            return this.images[0]
         }
         else{
-            return this.image.find(e => e.image === image_key)
+            return this.images.find(e => e.images === image_key)
         }
     },
 
