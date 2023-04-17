@@ -76,24 +76,24 @@ function Product(id, name, description, price, brand, sizes, activesize, quantit
 
 
     this.getImage = (image_key) => {
-        if(image_key === 'undefined' || image_key === null || image_key === NaN){
+        if(image_key === 'undefined'){
             return this.images[0]
         }
         else{
-            return this.images.find(e => e.images === image_key)
+            return this.images.find(e => e === image_key)
         }
     },
 
 
     this.addSize = (size_new) => this.sizes = sizes.push(size_new)
    
-    this.deleteSize = (size_key) => delete this.sizes.find(e => e.sizes === size_key)
+    this.deleteSize = (size_key) => splice(this.sizes.find(e => e.sizes === size_key))
 
 
     this.addReview = (newreview) => this.reviews.push(newreview)
 
 
-    this.deleteReview = (rev_id) => delete this.reviews.find(reviews => reviews.ID === rev_id),
+    this.deleteReview = (rev_id) => splice(this.reviews.find(reviews => reviews.ID === rev_id)),
 
 
     this.getAverageRating = () => {
