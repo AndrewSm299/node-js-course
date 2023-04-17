@@ -87,13 +87,14 @@ function Product(id, name, description, price, brand, sizes, activesize, quantit
 
     this.addSize = (size_new) => this.sizes = sizes.push(size_new)
    
-    this.deleteSize = (size_key) => splice(this.sizes.find(e => e.sizes === size_key))
+    this.deleteSize = (size_key) => this.sizes.splice(IndexOf(this.sizes.find(e => e === size_key)), 1)
+
 
 
     this.addReview = (newreview) => this.reviews.push(newreview)
 
 
-    this.deleteReview = (rev_id) => splice(this.reviews.find(reviews => reviews.ID === rev_id)),
+    this.deleteReview = (rev_id) => this.reviews.splice(IndexOf(this.reviews.find(e => e === rev_id)), 1)
 
 
     this.getAverageRating = () => {
