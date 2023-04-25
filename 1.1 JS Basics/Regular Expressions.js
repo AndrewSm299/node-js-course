@@ -1,22 +1,17 @@
 let Validator = {}
 
 Validator.validateEmail = (email) => {
-    let regexp = /^([^\.\+\-][\.\+a-z0-9-]{1,19})@([\.\!\$%&’\*\+\/=\?\^_a-z0-9\-]{1,15}).([a-z]{1,5})$/i
+    let regexp = /^([^\.\+\-][\.\+a-z0-9-]{1,19})@([\.\!\$%&’\*\+\/=\?\^_a-z0-9\-]{1,15})\.([a-z]{1,5})$/i
     return email.match(regexp) ? true : false
 }
 
 Validator.validatePhone = (phone) => {
     if(phone.length > 25){
-        return null
+        return false
     }
-    let a = ''
-    for(let i = 0; i < phone.length; i++){
-        if(phone[i] != ' '| phone[i] != '-'){
-            a = a + phone[i]
-        }
-    }
+    
     let regexp = /^(\+?\d{2}?)(\(?\d{3}\)?)(\d{7})$/
-    return a.match(regexp) ? true : false
+    return phone.match(regexp) ? true : false
 }
 
 Validator.validatePassword = (password)  => {
