@@ -10,7 +10,7 @@ Validator.validatePhone = (phone) => {
         return false
     }
     
-    let regexp = /^(\+?\d{2}?)(\(?\d{3}\)?)(\d{7})$/
+    let regexp = /^[\s\-]*(\+?[\s\-]*\d?[\s\-]*\d?[\s\-]*)(\(?[\s\-]*\d[\s\-]*\d[\s\-]*\d[\s\-]*\)?)([\s\-]*\d){7}[\s\-]*$/
     return phone.match(regexp) ? true : false
 }
 
