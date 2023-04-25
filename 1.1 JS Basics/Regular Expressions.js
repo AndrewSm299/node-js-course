@@ -30,29 +30,29 @@ Validator.validatePassword = (password)  => {
 
 // validate email
 
-console.log(Validator.validateEmail('fi@secondpart.end')) 
-console.log(Validator.validateEmail('first-part@.se=cond%p.art.end'))
-console.log(Validator.validateEmail('first.part@se=cond%part.r'))
-console.log(Validator.validateEmail('f@secondart.end,')) 
-console.log(Validator.validateEmail('first-part@.se=cond@part.end'))
-console.log(Validator.validateEmail('-firstpart@.se=cond%.enddeded'))
-console.log(Validator.validateEmail('firs_tpart@.se.en'))
-console.log(Validator.validateEmail('firstpart@.se.enddeded'))
+console.log(Validator.validateEmail('fi@secondpart.end')) // true
+console.log(Validator.validateEmail('first-part@.se=cond%p.art.end')) // true
+console.log(Validator.validateEmail('first.part@se=cond%part.r')) // true
+console.log(Validator.validateEmail('f@secondart.end,')) // false
+console.log(Validator.validateEmail('first-part@.se=cond@part.end')) // false
+console.log(Validator.validateEmail('-firstpart@.se=cond%.enddeded')) // false
+console.log(Validator.validateEmail('firs_tpart@.se.en')) // false
+console.log(Validator.validateEmail('firstpart@.se.enddeded')) // false
 
 // validate phonenumber
 
-console.log(Validator.validatePhone('+38 (099) 567 8901'))
-console.log(Validator.validatePhone('+38 099 5 6 7 8 9  01'))
-console.log(Validator.validatePhone('(09-9) 567-890-1'))
-console.log(Validator.validatePhone('--  (099) 567 890-1'))
-console.log(Validator.validatePhone('+38 (099) 567 8901 0'))
-console.log(Validator.validatePhone('+38 099 a0000000'))
-console.log(Validator.validatePhone('+38 (0989) 567 8901'))
-console.log(Validator.validatePhone('+48 (0989) 567 8901'))
+console.log(Validator.validatePhone('+38 (099) 567 8901')) // true
+console.log(Validator.validatePhone('+38 099 5 6 7 8 9  01')) // true
+console.log(Validator.validatePhone('(09-9) 567-890-1')) // true
+console.log(Validator.validatePhone('--  (099) 567 890-1')) // true
+console.log(Validator.validatePhone('+38 (099) 567 8901 0')) // false
+console.log(Validator.validatePhone('+38 099 a0000000')) // false
+console.log(Validator.validatePhone('+38 (0989) 567 8901')) // false
+console.log(Validator.validatePhone('+48 (0989) 567 8901')) // false
 
 //validate password
 
-console.log(Validator.validatePassword('C00l_Pass'))
-console.log(Validator.validatePassword('SupperPas1'))
-console.log(Validator.validatePassword('Cool_pass'))
-console.log(Validator.validatePassword('C00l'))
+console.log(Validator.validatePassword('C00l_Pass')) // true
+console.log(Validator.validatePassword('SupperPas1')) // true
+console.log(Validator.validatePassword('Cool_pass')) // false
+console.log(Validator.validatePassword('C00l')) // false
