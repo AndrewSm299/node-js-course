@@ -20,7 +20,7 @@ Validator.validatePhone = (phone) => {
 }
 
 Validator.validatePassword = (password)  => {
-    let regexp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
+    let regexp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9_]{8,}$/
     return password.match(regexp) ? true : false
 }
 
