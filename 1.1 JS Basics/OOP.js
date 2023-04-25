@@ -29,7 +29,7 @@ function Clothes(ID, Name, description, price, quantity, reviews, images, date, 
     this.color = color
 }
 
-Clothes.prototype = Object.create(AbstractProduct.prototype);
+Clothes.prototype = Object.create(AbstractProduct.prototype)
 
 Clothes.prototype.getmaterial = () => console.log(this.material)
 Clothes.prototype.setmaterial = (newmaterial) => this.material = newmaterial
@@ -64,7 +64,7 @@ function Electronics(ID, Name, description, price, quantity, reviews, images, da
     this.power = power
 }
 
-Electronics.prototype = Object.create(AbstractProduct.prototype);
+Electronics.prototype = Object.create(AbstractProduct.prototype)
 
 Electronics.prototype.getwarranty = () => console.log(this.warranty)
 Electronics.prototype.setwarranty = (newwarranty) => this.warranty = newwarranty
