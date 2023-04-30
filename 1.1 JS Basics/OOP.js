@@ -324,6 +324,13 @@ Electronics.prototype.getterSetter = function(key, value){
 
 // Tests
 
+// Tests for AbstractProduct
+const bugatti = new AbstractProduct(5, 'car', 'the best car to have in your life', 1000000004, 2, [], [], '2024-09-04', 'BUgatti' )
+bugatti.getFullInformation()
+bugatti.getPriceForQuantity(5)
+bugatti.getterSetter("name", "Chiron")
+console.log(bugatti.getterSetter("name"))
+
 // Tests for Clothes
 const tshirt = new Clothes(1, 'T-Shirt', 'A comfortable cotton T-shirt', 20.99, 10, [], [], '2022-01-01', 'Adidas', 'Cotton', 'White');
 
