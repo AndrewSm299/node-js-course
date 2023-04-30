@@ -1,3 +1,17 @@
+/**
+ *
+ * @param {} id
+ * @param {String} name
+ * @param {String} description
+ * @param {Number} price per 1 piece of it
+ * @param {Number} quantity of avaliable products
+ * @param {Array} reviews
+ * @param {Array} images
+ * @param {} date of creating the product
+ * @param {String} brand
+ *
+ */
+
 function AbstractProduct(id, name, description, price, quantity, reviews, images, date, brand) {
     this.id = id  
     this.name = name
@@ -19,6 +33,22 @@ AbstractProduct.prototype.getPriceForQuantity = function() {
 AbstractProduct.prototype.getterSetter = function() {
     throw new Error("Cannot call an abstract method")
 }
+
+/**
+ *
+ * @param {} id
+ * @param {String} name
+ * @param {String} description
+ * @param {Number} price per 1 piece of Clothes
+ * @param {Number} quantity of avaliable Clothes
+ * @param {Array} reviews on Clothes
+ * @param {Array} images
+ * @param {} date of creating the Clothes
+ * @param {String} brand
+ * @param {String} material what is it made of
+ * @param {String} color
+ *
+ */
 
 function Clothes(id, name, description, price, quantity, reviews, images, date, brand, material, color){
     AbstractProduct.call(this, id, name, description, price, quantity, reviews, images, date, brand)
@@ -42,6 +72,13 @@ Clothes.prototype.getFullInformation = function() {
     color = ${this.color}
     material = ${this.material}`)
 }
+
+/**
+ *
+ * @param {Number} int quantity to define the price for it
+ *
+ */
+
 Clothes.prototype.getPriceForQuantity = function(int) {
     console.log(`$${this.price * int}`)
 }
@@ -141,6 +178,22 @@ Clothes.prototype.getterSetter = function(key, value){
     }
 }
 
+/**
+ *
+ * @param {} id
+ * @param {String} name
+ * @param {String} description
+ * @param {Number} price per 1 piece of it
+ * @param {Number} quantity of avaliable Electronics
+ * @param {Array} reviews on it
+ * @param {Array} images
+ * @param {} date of creating the Clothes
+ * @param {String} brand
+ * @param {String} warranty code
+ * @param {String} power
+ *
+ */
+
 function Electronics(id, name, description, price, quantity, reviews, images, date, brand, warranty, power){
     AbstractProduct.call(this, id, name, description, price, quantity, reviews, images, date, brand)
     this.warranty = warranty
@@ -163,6 +216,13 @@ Electronics.prototype.getFullInformation = function() {
     warranty = ${this.warranty}
     power = ${this.power}`)
 }
+
+/**
+ *
+ * @param {Number} int quantity to define the price for it
+ *
+ */
+
 Electronics.prototype.getPriceForQuantity = function(int) {
     console.log(`$${this.price * int}`)
 }
