@@ -27,7 +27,6 @@ function csvtext(csvText){
 }
 
 
-
 // Tests
 
 let example = `44.38,34.33,Алушта,31440,
