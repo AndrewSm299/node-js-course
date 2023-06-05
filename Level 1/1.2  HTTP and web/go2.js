@@ -24,13 +24,23 @@ function readHttpLikeInput(){
 let contents = readHttpLikeInput();
 
 // вот эту функцию собственно надо написать
-function parseTcpStringAsHttpRequest(string) { 
-  return { 
-    method: "...", 
-    uri : "...", 
-    headers:  "...", 
-    body :"...", 
-  }; 
+function parseTcpStringAsHttpRequest(string) {
+    let array = string.split(/\n/g)
+    let methodData = array[0].match(/[A-Z]*\s/),
+    uriData = array[1].match(/\s[^\s]*\s/),
+    headersData = {},
+    bodyData,
+    key,
+    value;
+
+    methodData = string.match(/[A-Z]*\s/)
+
+    return {
+        method: methodData,
+        uri: uriData,
+        headers: headersData,
+        body: bodyData,
+      }
 }
 
 http = parseTcpStringAsHttpRequest(contents); 
