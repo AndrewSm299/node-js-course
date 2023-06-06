@@ -29,7 +29,7 @@ function parseTcpStringAsHttpRequest(string) {
     let methodData = array[0].match(/[A-Z]*\s/),
     uriData = array[1].match(/\s[^\s]*\s/),
     headersData = {},
-    bodyData,
+    bodyData = ,
     key,
     value;
 
