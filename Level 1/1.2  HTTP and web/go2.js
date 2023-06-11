@@ -25,22 +25,28 @@ let contents = readHttpLikeInput();
 
 // вот эту функцию собственно надо написать
 function parseTcpStringAsHttpRequest(string) {
-    let array = string.split(/\n/g)
-    let methodData = array[0].match(/[A-Z]*\s/),
-    uriData = array[1].match(/\s[^\s]*\s/),
-    headersData = {},
-    bodyData = ,
-    key,
-    value;
-
-    methodData = string.match(/[A-Z]*\s/)
+    let array = string.split(/\r?\n/).filter((str) => str.replaceAll(' ', '').length != 0),
+        methodData = array[0].match(/[A-Z]*\s/)[0].trim(),
+        uriData = array[0].match(/\s[^\s]*\s/)[0].trim(),
+        headersData = {},
+        bodyData = array[array.length - 1].trim(),
+        headerName,
+        headerValue,
+        headerParts
+    
+    for (let i = 1; i < array.length - 1; i++) {
+        headerParts = array[i].split(':')
+        headerName = headerParts[0].trim()
+        headerValue = headerParts[1].trim()
+        headersData[headerName] = headerValue
+    }
 
     return {
-        method: methodData,
-        uri: uriData,
-        headers: headersData,
-        body: bodyData,
-      }
+      method: methodData,
+      uri: uriData,
+      headers: headersData,
+      body: bodyData,
+    }
 }
 
 http = parseTcpStringAsHttpRequest(contents); 
