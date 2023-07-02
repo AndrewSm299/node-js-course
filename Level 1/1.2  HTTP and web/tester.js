@@ -1,8 +1,14 @@
+const { get } = require('http');
+
 if (process.argv.length != 4) {
     console.log(process.argv)
 	console.log("usage: node tester.js <tasknum> <path/to/taskN.js>\nexample: node tester.js 1 t1.js\n");
     process.exit(1);
 }
+
+const date = new Date(),
+options = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' },
+formattedDate = date.toLocaleString('en-US', options)
 
 const inputs = {
     1: `hello`,
@@ -39,6 +45,36 @@ Accept-Language: en-us
 Accept-Encoding: gzip, deflate
 User-Agent: Mozilla/4.0
 
+`,
+
+    6: `POST /sum?nums=1,2,3,4 HTTP/1.1
+Host: shpp.me
+Accept: image/gif, image/jpeg, */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+User-Agent: Mozilla/4.0
+    
+`,
+
+    7: `GET /sum=hghhuy HTTP/1.1
+Host: shpp.me
+Accept: image/gif, image/jpeg, */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+User-Agent: Mozilla/4.0
+    
+`,
+
+    8: `GET /link?url=btyrnoib HTTP/1.1
+Host: shpp.me
+Accept: image/gif, image/jpeg, */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+User-Agent: Mozilla/4.0
+    
+`,
+    9: `GET /sum?nums=1,2,3 HTTP/1.1
+Host: student.shpp.me
 `
 }
 
@@ -46,6 +82,7 @@ User-Agent: Mozilla/4.0
 
 answers = {
 	1: `3`,
+
 	2: JSON.stringify({
             "method": "POST",
             "uri": "\/doc\/test",
@@ -59,7 +96,9 @@ answers = {
             },
             "body": "bookId=12345&author=Tan+Ah+Teck"
         }, undefined, 2),
+    
     3: `HTTP/1.1 200 OK
+Date: ${formattedDate}
 Server: Apache/2.2.14 (Win32)
 Connection: Closed
 Content-Type: text/html; charset=utf-8
@@ -74,7 +113,43 @@ Connection: Closed
 Content-Type: text/html; charset=utf-8
 
 <h1 style="color:green">FOUND</h1>`,
+
 	5: `please do it yourself`,
+
+    6: `HTTP/1.1 400 Bad Request
+Date: ${formattedDate}
+Server: Apache/2.2.14 (Win32)
+Connection: Closed
+Content-Type: text/html; charset=utf-8
+Content-Length: 11
+
+bad request`,
+
+    7: `HTTP/1.1 400 Bad Request
+Date: ${formattedDate}
+Server: Apache/2.2.14 (Win32)
+Connection: Closed
+Content-Type: text/html; charset=utf-8
+Content-Length: 11
+
+bad request`,
+
+    8: `HTTP/1.1 404 Not Found
+Date: ${formattedDate}
+Server: Apache/2.2.14 (Win32)
+Connection: Closed
+Content-Type: text/html; charset=utf-8
+Content-Length: 9
+
+not found`,
+    9: `HTTP/1.1 200 OK
+Date: ${formattedDate}
+Server: Apache/2.2.14 (Win32)
+Connection: Closed
+Content-Type: text/html; charset=utf-8
+Content-Length: 
+    
+6`
 }
 
 const execSync = exports.execSync = (cmd, input) => {
