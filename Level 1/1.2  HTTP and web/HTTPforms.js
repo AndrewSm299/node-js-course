@@ -35,50 +35,38 @@ function processHttpRequest($method, $uri, $headers, $body) {
     let StatusMessage = ``
     let login = ''
     let password = '' 
-    if($body.match(/login=[.]*&password=[.]*$/)){
+    if($body.match(/login=[a-z1-9]*&password=[a-z1-9]*/)){
         let loginandpassword = $body.split('&')
-        login = loginandpassword[0].slice(loginandpassword[0].indexOf('='))
-        password = loginandpassword[0].slice(loginandpassword[0].indexOf('='))
+        login = loginandpassword[0].slice(loginandpassword[0].indexOf('=') + 1).toString()
+        password = loginandpassword[1].slice(loginandpassword[1].indexOf('=') + 1).toString()
     }
     else{
         outputHttpResponse('400', 'Bad Request' , `Server: Apache/2.2.14 (Win32)\nContent-Length: 11\nConnection: Closed\nContent-Type: text/html; charset=utf-8`, `bad request`)
     }
     if (require('fs').existsSync(filePath)) {
         if($method == 'POST' && $uri == '/api/checkLoginAndPassword' && $headers["Content-Type"] == 'application/x-www-form-urlencoded'){
-            if(require("fs").readFileSync("passwords.txt").includes(`${login}:${password}`)){
+            if(require("fs").readFileSync(filePath, "utf8", (data) => data.toString().indexOf(`${login}:${password}`) !== -1)){
                 $body = `<h1 style="color:green">FOUND</h1>`
-                $headers = `Server: Apache/2.2.14 (Win32)
-Content-Length: ${$body.length}
-Connection: Closed
-Content-Type: text/html; charset=utf-8`
+                $headers = `Server: Apache/2.2.14 (Win32)\nContent-Length: ${$body.length}\nConnection: Closed\nContent-Type: text/html; charset=utf-8`
                 StatusCode = '200'
                 StatusMessage = 'OK'
             }
             else{
                 $body = `<h1 style="color:red">NOT FOUND</h1>`
-                $headers = `Server: Apache/2.2.14 (Win32)
-Content-Length: ${$body.length}
-Connection: Closed
-Content-Type: text/html; charset=utf-8`
+                $headers = `Server: Apache/2.2.14 (Win32)\nContent-Length: ${$body.length}\nConnection: Closed\nContent-Type: text/html; charset=utf-8`
                 StatusCode = '200'
                 StatusMessage = 'OK'
             }
         }
         else if($method != 'POST'|| $uri != `/api/checkLoginAndPassword` || $headers["Content-Type"] != 'application/x-www-form-urlencoded'){
             $body = `bad request`
-            $headers = `Server: Apache/2.2.14 (Win32)
-Content-Length: ${$body.length}
-Connection: Closed
-Content-Type: text/html; charset=utf-8`
+            $headers = `Server: Apache/2.2.14 (Win32)\nContent-Length: ${$body.length}\nConnection: Closed\nContent-Type: text/html; charset=utf-8`
             StatusCode = '400'
             StatusMessage = 'Bad Request'
         }
         else{
             $body = `not found`
-            $headers = `Server: Apache/2.2.14 (Win32)
-Content-Length: ${$body.length}
-Connection: Closed
-Content-Type: text/html; charset=utf-8`
+            $headers = `Server: Apache/2.2.14 (Win32)\nContent-Length: ${$body.length}\nConnection: Closed\nContent-Type: text/html; charset=utf-8`
             StatusCode = '404'
             StatusMessage = 'Not Found'
         }
@@ -87,10 +75,7 @@ Content-Type: text/html; charset=utf-8`
         StatusCode = '500'
         StatusMessage = 'Internal Server Error'
         $body = ``
-        $headers = `Server: Apache/2.2.14 (Win32)
-Content-Length: ${$body.length}
-Connection: Closed
-Content-Type: text/html; charset=utf-8` 
+        $headers = `Server: Apache/2.2.14 (Win32)\nContent-Length: ${$body.length}\nConnection: Closed\nContent-Type: text/html; charset=utf-8` 
     }
     outputHttpResponse(StatusCode, StatusMessage , $headers, $body)
 }
