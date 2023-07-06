@@ -27,14 +27,12 @@ ${body}`)
 }
    
 function processHttpRequest($method, $uri, $headers, $body) {
-    const date = new Date(),
-    options = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' },
-    formattedDate = date.toLocaleString('en-US', options)
     const filePath = "./passwords.txt"
     let StatusCode = ``
     let StatusMessage = ``
     let login = ''
-    let password = '' 
+    let password = ''
+
     if($body.match(/login=[a-z1-9]*&password=[a-z1-9]*/)){
         let loginandpassword = $body.split('&')
         login = loginandpassword[0].slice(loginandpassword[0].indexOf('=') + 1).toString()
@@ -43,9 +41,13 @@ function processHttpRequest($method, $uri, $headers, $body) {
     else{
         outputHttpResponse('400', 'Bad Request' , `Server: Apache/2.2.14 (Win32)\nContent-Length: 11\nConnection: Closed\nContent-Type: text/html; charset=utf-8`, `bad request`)
     }
+
+    let passwords = require("fs").readFileSync(filePath).toString().split(`\n`).reduce((obj, line) => (parts = line.split(':'), obj[parts[0]] = parts[1], obj), {})
+    let found = Object.keys(passwords).some((key) => key === login && passwords[key] === password)
+
     if (require('fs').existsSync(filePath)) {
         if($method == 'POST' && $uri == '/api/checkLoginAndPassword' && $headers["Content-Type"] == 'application/x-www-form-urlencoded'){
-            if(require("fs").readFileSync(filePath, "utf8", (data) => data.toString().indexOf(`${login}:${password}`) !== -1)){
+            if(found){
                 $body = `<h1 style="color:green">FOUND</h1>`
                 $headers = `Server: Apache/2.2.14 (Win32)\nContent-Length: ${$body.length}\nConnection: Closed\nContent-Type: text/html; charset=utf-8`
                 StatusCode = '200'
