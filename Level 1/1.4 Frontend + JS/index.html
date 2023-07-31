@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.4 Frontend + JS</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div id="div1" class="div"></div>
+    <button onclick="setStyles()">Remove block 1</button><br>
 
+    <div id="div2" class="div"></div>
+    <button onclick="removeDiv2()">Remove block 2</button><br>
+
+    <div id="div3" class="div"></div>
+    <button onclick="setClass()">Remove block 3</button><br>
+
+    <div id="div4" class="div"></div><br>
+
+    <div id="div5" class="div"></div><br>
+
+    <button onclick="toggleBlocks('.div')">Toggle all blocks</button><br>
+
+    <label for="qselector">Query selector to toggle:</label>
+    <input type="text" id="qselector" name="qselector"><br>
+
+    <button onclick="toggleBlocks()">Toggle all blocks with this selector</button><br>
+    <p>If empty, will toggle all black blocks.</p>
+
+    <button onclick="buttonClickHandler()" id="yellow-div">Click Me!</button><br><br>
+
+    <button onmouseover="OnHover()" onmouseout="OnOut()">Hover me!</button>
+    <div id="red-block"></div><br>
+
+    <input type="text" id="inputField" />
+    <div id="green-block"></div>
+</body>
+</html>
