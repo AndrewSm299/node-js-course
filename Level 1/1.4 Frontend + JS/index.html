@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="script.js"></script>
 </head>
-<body>
+<body >
     <div id="div1" class="div"></div>
     <button onclick="setStyles()">Remove block 1</button><br>
 
@@ -34,7 +34,36 @@
     <button onmouseover="OnHover()" onmouseout="OnOut()">Hover me!</button>
     <div id="red-block"></div><br>
 
-    <input type="text" id="inputField" />
-    <div id="green-block"></div>
+    <input type="text" id="inputField" onmouseover="Focused()" oninput="Input()">
+    <div id="green-block"></div><br><br>
+
+    <textarea id="imageLinks" placeholder="Link to your image evrey single from a new line"></textarea>
+    <button onclick="loadImages()">Show Image</button>
+    <div id="imageContainer"></div>
+
+    <div id="upper-right-block"></div>
+
+    <div class="input-blocks" id="field1" contenteditable="true"></div>
+    <div class="input-blocks" id="field2" contenteditable="true"></div>
+    <div class="input-blocks" id="field3" contenteditable="true"></div>
+
+    <div onclick="alert('You clicked big block')" style="width:50px;height:50px;background-color:gray;display: flex;justify-content: center;align-items: center;position: relative;">
+        <div onclick="event.stopPropagation(); alert('You clicked small block')" style="width:25px;height:25px;background-color:red;position:absolute;"></div>
+    </div>
+
+    <img src="https://cdn.icon-icons.com/icons2/1238/PNG/512/upscrollarrow_83865.png" alt="Go Up!" id="scroll-top" onclick="scrollToTop()">
+
+    <button onclick="showSquare()">Gray square</button>
+    <div id="square" onclick="hideSquare()"></div><br><br>
+
+    <form id="myForm"><input type="submit" value="GO"></form>
+
+    <div class="fileInputContainer">
+        <input type="file" id="fileInput" class="fileInput">
+
+        <label for="fileInput" class="fileLabel">
+            Drag and drop the files here or click to select the file
+        </label>
+    </div>
 </body>
 </html>
