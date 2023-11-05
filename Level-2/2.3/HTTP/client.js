@@ -13,7 +13,7 @@ const options = {
 const startTime = Date.now();
 
 const req = http.request(options, (res) => {
-    let data = '';
+    let data = 'Some text to send to the server';
 
     res.on('data', (chunk) => {
         data += chunk;
