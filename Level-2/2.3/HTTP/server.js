@@ -2,6 +2,10 @@ const http = require('http');
 
 const port = 3000;
 
+function currentTime(){
+  return new Date().toLocaleString();
+}
+
 const server = http.createServer((req, res) => {
   if (req.method === 'POST') {
     let requestData = '';
@@ -11,7 +15,7 @@ const server = http.createServer((req, res) => {
     });
 
     req.on('end', () => {
-      console.log('Received data from the client:', requestData);
+      console.log(`${currentTime} Received data from the client:${requestData}`);
 
       res.writeHead(200, { 'Content-Type': 'text/plain' });
       res.end(requestData);
@@ -23,5 +27,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`${currentTime} Server listening on port ${port}`);
 });
