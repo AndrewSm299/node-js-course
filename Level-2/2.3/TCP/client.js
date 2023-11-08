@@ -1,25 +1,24 @@
-const dgram = require('dgram');
-const client = dgram.createSocket('udp4');
+const net = require('net');
 
-const PORT = 3333;
-const SERVER_HOST = 'localhost';
+const client = new net.Socket();
+
+const PORT = 8080;
+const HOST = '127.0.0.1';
 
 function currentTime(){
-    return new Date().toLocaleString();
+  return new Date().toLocaleString();
 }
 
-const message = 'Text to send to the server';
-
-client.send(message, PORT, SERVER_HOST, (err) => {
-    if (err) {
-        console.error(`${currentTime()} Client error: ${err}`);
-    }
-    else {
-        console.log(`${currentTime()} Message sent to server: ${message}`);
-    }
+client.connect(PORT, HOST, () => {
+  console.log(`${currentTime()} Connected to server`);
+  client.write(`Text to send here`);
+  client.end();
 });
 
-client.on('message', (msg, rinfo) => {
-    console.log(`${currentTime()} Received response from server: ${msg}`);
-    client.close();
+client.on('data', (data) => {
+  console.log(`${currentTime()} Received data from server: ${data}`);
+});
+
+client.on('close', () => {
+  console.log(`${currentTime()} Connection to server closed`);
 });
