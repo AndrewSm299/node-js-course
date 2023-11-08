@@ -5,11 +5,13 @@ function currentTime(){
 }
 
 const server = net.createServer((socket) => {
+  const userIP = socket.remoteAddress;
   console.log(`${currentTime()} Client connected`);
+  console.log(`Client's IP-adress: ${userIP}`)
 
   socket.on('data', (data) => {
     console.log(`${currentTime()} Received data from client: ${data}`);
-    socket.write(`${currentTime()} You send this text to the server: ${data}`);
+    socket.write(`${data}`);
   });
 
   socket.on('end', () => {
