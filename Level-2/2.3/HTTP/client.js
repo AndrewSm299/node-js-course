@@ -1,38 +1,43 @@
 const http = require('http');
 
 const options = {
-    hostname: 'localhost',
-    port: 3000,
-    path: '/',
-    method: 'POST',
-    headers: {
-      'Content-Type': 'text/plain',
-    },
+  hostname: 'localhost',
+  port: 3000,
+  path: '/',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'text/plain',
+  },
 };
 
 const startTime = Date.now();
 
-function currentTime(){
-    return new Date().toLocaleString();
+function getInfo() {
+  const infoString = new Date().toLocaleString();
+  return infoString;
 }
 
 const req = http.request(options, (res) => {
-    let data = 'Text to send to the server';
+  let data = '';
 
-    res.on('data', (chunk) => {
-        data += chunk;
-    });
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
 
-    res.on('end', () => {
-        const endTime = Date.now();
+  res.on('end', () => {
+    const endTime = Date.now();
 
-        console.log(`${currentTime()} Response from server: ${data}`);
-        console.log(`${currentTime()} Time elapsed (ms): ${endTime - startTime}`);
-    });
+    console.log(`${getInfo()} Response from server: ${data}`);
+    console.log(`${getInfo()} Time elapsed (ms): ${endTime - startTime}`);
+  });
+  res.on('close', () => {
+    console.log(`${getInfo()} Connection has been closed.`);
+  });
 });
 
 req.on('error', (error) => {
-    console.error(`${currentTime()} Request error: ${error}`);
+  console.error(`${getInfo()} Request error: ${error}`);
 });
 
+req.write('Text to send to the server');
 req.end();
