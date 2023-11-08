@@ -2,11 +2,12 @@ const http = require('http');
 
 const port = 3000;
 
-function currentTime(){
+function getInfo(){
   return new Date().toLocaleString();
 }
 
 const server = http.createServer((req, res) => {
+  const clientIP = req.connection.remoteAddress;
   if (req.method === 'POST') {
     let requestData = '';
 
@@ -15,7 +16,8 @@ const server = http.createServer((req, res) => {
     });
 
     req.on('end', () => {
-      console.log(`${currentTime} Received data from the client:${requestData}`);
+      console.log(`${getInfo()} Connection from IP: ${clientIP}`);
+      console.log(`${getInfo()} Received data from the client:${requestData}`);
 
       res.writeHead(200, { 'Content-Type': 'text/plain' });
       res.end(requestData);
@@ -27,5 +29,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(port, () => {
-  console.log(`${currentTime} Server listening on port ${port}`);
+  console.log(`${getInfo()} Server listening on port ${port}`);
 });
