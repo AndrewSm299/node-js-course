@@ -223,5 +223,3 @@ const port: number = 3000;
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
-
-// сделать запись сессий на монгу и получение данных с нее, посмотреть исправиться ли оно
