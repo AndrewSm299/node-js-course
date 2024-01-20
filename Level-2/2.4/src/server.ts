@@ -20,6 +20,7 @@ interface User {
 }
 interface Item {
   _id: mongoose.Types.ObjectId;
+  id: number;
   text: string;
   checked: boolean;
   user: string;
@@ -57,6 +58,7 @@ const UserSchema = new mongoose.Schema<User>({
 });
 
 const ItemSchema = new mongoose.Schema<ItemModel>({
+  id: Number,
   text: String,
   checked: Boolean,
   user: String,
@@ -82,7 +84,7 @@ app.use(session({
   saveUninitialized: false,
   cookie:{
     sameSite: 'none',
-    secure: true,
+    secure: false,
     maxAge: 24 * 3600 * 1000 // 1 day
   },
 }));
@@ -111,11 +113,9 @@ app.post('/api/v1/login', async (req, res) => {
 
     if (user) {
       req.session.user = { login: user.login };
-        
       console.log('User set during login:', req.session.user.login);
-      console.log('Session:', req.sessionID);
 
-      req.session.save((err) => {
+      req.session.save( async (err) => {
         if (err) {
           console.error(err);
           return res.status(500).json({ ok: false, error: 'Error saving session' });
@@ -150,9 +150,6 @@ app.post('/api/v1/register', async (req: Request, res: Response) => {
 });
 
 app.use((req, res, next) => {
-  console.log('Session:', req.sessionID);
-  console.log('User:', req.session.user?.login);
-  
   if (req.session.user) {
     next();
   } else {
@@ -166,11 +163,23 @@ app.get('/api/v1/items', async (req: Request, res: Response) => {
     res.json(items);
 });
 
+async function generateNewId(login: String){
+  const userItems = await ItemModel.find({ user: login }).lean();
+  if (userItems.length > 0) {
+    const lastID = userItems[userItems.length - 1].id;
+    return lastID + 1;
+  }
+  else{
+    return 0
+  }
+}
+
 app.post('/api/v1/items', async (req: Request, res: Response) => {
   const { text } = req.body;
   const userLogin = req.session.user?.login;
-  const newItem = await ItemModel.create({ text, checked: false, user: userLogin });
-  res.json({ id: newItem._id });
+  const new_id = await generateNewId(userLogin)
+  const newItem = await ItemModel.create({ id: new_id, text, checked: false, user: userLogin });
+  res.json({ id: newItem.id });
 });
 
 app.put('/api/v1/items', async (req: Request, res: Response) => {
