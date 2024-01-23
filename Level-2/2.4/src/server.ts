@@ -1,6 +1,7 @@
+// server based on basic routes
+
 import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
-import fs from 'fs';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import session from 'express-session';
@@ -89,31 +90,18 @@ app.use(session({
   },
 }));
 
-const dataFilePath: string = './data.json';
-
-const initDataFile = () => {
-  try {
-    if (!fs.existsSync(dataFilePath)) {
-      fs.writeFileSync(dataFilePath, JSON.stringify([]));
-    }
-    const fileData = fs.readFileSync(dataFilePath, 'utf8');
-    return JSON.parse(fileData);
-  } catch (error) {
-    console.error('Error parsing JSON data file:', error);
-    return [];
-  }
-};
-
-let items: { id: number; text: string; checked: boolean }[] = initDataFile();
-
 app.post('/api/v1/login', async (req, res) => {
   try {
     const { login, pass } = req.body;
+
+    if (!login || !pass) {
+      return res.status(400).json({ ok: false, error: 'Invalid login or password' });
+    }
+
     const user = await UserModel.findOne({ login, pass });
 
     if (user) {
       req.session.user = { login: user.login };
-      console.log('User set during login:', req.session.user.login);
 
       req.session.save( async (err) => {
         if (err) {
@@ -134,6 +122,11 @@ app.post('/api/v1/login', async (req, res) => {
 app.post('/api/v1/register', async (req: Request, res: Response) => {
   try {
     const { login, pass } = req.body;
+
+    if (!login || !pass) {
+      return res.status(400).json({ ok: false, error: 'Invalid login or password' });
+    }
+
     if (await UserModel.findOne({ login })) {
       res.status(400).json({ ok: false, error: 'User already exists' });
     } 
@@ -159,7 +152,7 @@ app.use((req, res, next) => {
 
 app.get('/api/v1/items', async (req: Request, res: Response) => {
     const userLogin = req.session.user?.login;
-    const items: ItemModel[] = await ItemModel.find({ user: userLogin }).lean();
+    const items: ItemModel[] = await ItemModel.find({ user: userLogin }).select({ _id: 0, __v: 0, user: 0 }).lean();
     res.json(items);
 });
 
@@ -176,18 +169,28 @@ async function generateNewId(login: String){
 
 app.post('/api/v1/items', async (req: Request, res: Response) => {
   const { text } = req.body;
+
+  if (!text) {
+    return res.status(400).json({ ok: false, error: 'Invalid item text' });
+  }
+
   const userLogin = req.session.user?.login;
   const new_id = await generateNewId(userLogin)
-  const newItem = await ItemModel.create({ id: new_id, text, checked: false, user: userLogin });
-  res.json({ id: newItem.id });
+  const newItem = await ItemModel.create({ id: new_id, text: text, checked: false, user: userLogin });
+  res.json({ id: newItem.id, text: text });  
 });
 
 app.put('/api/v1/items', async (req: Request, res: Response) => {
   try {
     const { id, text, checked } = req.body;
-    const userLogin = req.session.user?.login;
 
-    const result = await ItemModel.updateOne({ _id: id, user: userLogin }, { text, checked });
+    if (typeof id !== 'number' || typeof text !== 'string' || typeof checked !== 'boolean') {
+      return res.status(400).json({ ok: false, error: 'Invalid data types in the request payload' });
+    }
+
+    const userLogin = req.session.user?.login;
+    await ItemModel.updateOne({ id: id, user: userLogin }, { text: text, checked: checked });
+    res.json({ "ok" : true })
   } catch (error) {
     console.error(error);
     res.status(500).json({ ok: false, error: 'Internal server error' });
@@ -195,20 +198,19 @@ app.put('/api/v1/items', async (req: Request, res: Response) => {
 });
 
 
-app.delete('/api/v1/items', (req: Request, res: Response) => {
+app.delete('/api/v1/items', async (req: Request, res: Response) => {
   const { id } = req.body;
 
-  const itemIndex = items.findIndex((item) => item.id === id);
+  if (!id) {
+    return res.status(400).json({ ok: false, error: 'Invalid item text' });
+  }
 
-  if (itemIndex !== -1) {
-    items.splice(itemIndex, 1);
-
-    fs.writeFileSync(dataFilePath, JSON.stringify(items));
-
-    res.json({ ok: true });
-  } 
-  else {
+  const itemIndex = await ItemModel.find({ id: id })
+  if (itemIndex.length === 0) {
     res.status(404).json({ ok: false, error: 'Element not found' });
+  } else {
+    await ItemModel.deleteOne({ id: id })
+    res.json({ ok: true });
   }
 });
 
