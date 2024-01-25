@@ -233,7 +233,7 @@ const routerHandler = async (req: Request, res: Response) => {
   }
 };
 
-app.get('/api/v2/router', routerHandler);
+app.post('/api/v2/router', routerHandler);
 
 const port = 3000;
 
