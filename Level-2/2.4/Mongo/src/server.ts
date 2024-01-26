@@ -147,7 +147,7 @@ app.use((req, res, next) => {
   if (req.session.user) {
     next();
   } else {
-    res.status(401).json({ ok: false, error: 'Unauthorized' });
+    res.status(403).json({ ok: false, error: 'Forbidden'});
   }
 });
 
