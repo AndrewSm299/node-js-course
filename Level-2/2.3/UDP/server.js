@@ -27,7 +27,6 @@ server.on('message', (msg, rinfo) => {
     });
 });
 
-
 server.on('listening', () => {
     const address = server.address();
 
