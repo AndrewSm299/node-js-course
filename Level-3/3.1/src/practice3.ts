@@ -1,7 +1,4 @@
-// 1) сложный этап. напишите нормальную тайпскриптовую сигнатуру функции 
-// (отдельно опишите тип первого аргумента в виде interface)
-
-// https://pastebin.com/2nEJvk04
+// spoiler: https://pastebin.com/2nEJvk04
 
 
 interface isBigObject {
@@ -32,5 +29,3 @@ console.log(summ(a))
 // - про guards: https://www.typescriptlang.org/docs/handbook/2/narrowing.html#typeof-type-guards
 // - про truthiness narrowing: https://www.typescriptlang.org/docs/handbook/2/narrowing.html#truthiness-narrowing
 // - про control flow analysis: https://www.typescriptlang.org/docs/handbook/2/narrowing.html#control-flow-analysis
-
-// Дайте знать @roman про результаты.
