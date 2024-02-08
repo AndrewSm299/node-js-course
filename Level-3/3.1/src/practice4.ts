@@ -15,17 +15,20 @@
 // 1) дженерики с несколькими параметрами-типами
 // 2) такую штуку как Record (globalThis.Record, если быть точным ;) )
 
-let obj : object = { "roma" : 5, "vasya": 2 }
+let obj: Record<string, any>= { "roma" : 5, "vasya": 2 }
 
-function transformer(x){
-    return x > 2 ? true : false
+function transformer(x: number) : boolean{
+    return x > 2
 }
 
-function mapObject(data: object, transformer: Function): object{
-    const keys: number[] = +Object.keys(obj);
+function mapObject(data: Record<string, any>, transformer: Function): Record<string, any>{
+    let keys: string[] = Object.keys(obj);
     for (let i = 0; i < keys.length; i++){
-        let note = keys[i]
-        transformer(note)
+        let note = obj[keys[i]]
+        note = transformer(note)
+        data[keys[i]] = note;
     }
     return data
 }
+
+console.log(obj, transformer)
