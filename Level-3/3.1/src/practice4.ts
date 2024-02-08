@@ -22,7 +22,10 @@ function transformer(x){
 }
 
 function mapObject(data: object, transformer: Function): object{
-    for (let i = 0; i < data.length; i++)
-    transformer(note)
+    const keys: number[] = +Object.keys(obj);
+    for (let i = 0; i < keys.length; i++){
+        let note = keys[i]
+        transformer(note)
+    }
     return data
 }
