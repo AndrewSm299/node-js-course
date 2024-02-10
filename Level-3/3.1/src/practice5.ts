@@ -18,7 +18,7 @@ class Circle {
     radius!: number;
 }
 
-function наштамповать<SomeClass>(figure: new() => SomeClass, count: number)  {
+function наштамповать<SOMECLASS>(figure: new() => SOMECLASS, count: number)  {
     let a = []
     for (let i = 0; i < count; i++){
        a.push(new figure());
