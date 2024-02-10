@@ -7,11 +7,11 @@ interface isBigObject {
         };
     };
 
-let a: isBigObject = { hello: {cvalue: 1}, world: { cvalue: { yay: { cvalue: "2" } } } }
+let object: isBigObject = { hello: {cvalue: 1}, world: { cvalue: { yay: { cvalue: "2" } } } }
 
-function summ(a: isBigObject): number {
-    const x = Object.keys(a).map((k) => {
-        const elem = a[k];
+function summ(object: isBigObject): number {
+    const x = Object.keys(object).map((k) => {
+        const elem = object[k];
         if (typeof elem === undefined) return 2022;
         if (typeof elem?.cvalue === 'string') return +elem.cvalue || 2022;
         if (typeof elem?.cvalue == 'object') return summ(elem.cvalue);
@@ -24,7 +24,7 @@ function summ(a: isBigObject): number {
     return sum;
 }
 
-console.log(summ(a))
+console.log(summ(object))
 
 // - про guards: https://www.typescriptlang.org/docs/handbook/2/narrowing.html#typeof-type-guards
 // - про truthiness narrowing: https://www.typescriptlang.org/docs/handbook/2/narrowing.html#truthiness-narrowing
