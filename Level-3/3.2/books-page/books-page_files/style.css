@@ -410,6 +410,14 @@ html, body {
   text-align: center;
   display: none; }
 
+.button{
+  background-color:#34b96c;
+  color:#000000;
+  border-radius: 5px;
+  border-color: transparent;
+  margin-left: 5px;
+}
+
 /*------------------------------- .footer-wrapper  --------------------------*/
 .footer-wrapper {
   position: absolute;
